@@ -1,0 +1,48 @@
+package main
+
+import (
+	"fmt"
+)
+
+type Node struct {
+	data int
+	next *Node
+}
+
+type Queue struct {
+	front, rear *Node
+}
+
+func main() {
+	q := new(Queue)
+	q.enqueue(10)
+	q.enqueue(20)
+
+	fmt.Println(q.dequeue())
+	fmt.Println(q.dequeue())
+	fmt.Println(q.dequeue())
+	q.enqueue(30)
+	q.enqueue(40)
+	fmt.Println(q.dequeue())
+}
+
+func (q *Queue) enqueue(data int) {
+	n := &Node{data, nil}
+	if q.front == nil {
+		q.front = n
+		q.rear = n
+	} else {
+		q.rear.next = n
+	}
+}
+
+func (q *Queue) dequeue() int {
+	if q.front == nil {
+		return -1
+	} else {
+		data := q.front.data
+		//tmp := q.front.next
+		q.front = q.front.next
+		return data
+	}
+}

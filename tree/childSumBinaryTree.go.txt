@@ -1,0 +1,52 @@
+package main
+
+import (
+	"fmt"
+)
+
+type Node struct {
+	data        int
+	left, right *Node
+}
+
+var maxLevel = 0
+
+func main() {
+	fmt.Println("*************** Binary Tree **************")
+	root_new := newNode(0)
+	root_new.left = newNode(-10)
+	root_new.right = newNode(10)
+	//root_new.left.left = newNode(10)
+	//root_new.left.left.left= newNode(10)
+	fmt.Println(childSumProperty(root_new))
+
+}
+
+func newNode(data int) *Node {
+	return &Node{data, nil, nil}
+}
+
+func childSumProperty(root *Node) bool {
+	if root == nil {
+		return true
+	}
+	if root.left == nil && root.right == nil {
+		return true
+	}
+	if root.left != nil && root.right != nil {
+		if root.data != root.left.data+root.right.data {
+			return false
+		}
+	} else if root.left != nil {
+		if root.data != root.left.data {
+			return false
+		}
+	} else if root.right != nil {
+		if root.data != root.right.data {
+			return false
+		}
+	}
+	return (childSumProperty(root.left) &&
+		childSumProperty(root.right))
+
+}

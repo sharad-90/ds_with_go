@@ -1,0 +1,25 @@
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+func main() {
+	fmt.Println(rob([]int{2, 1, 1, 2}))
+}
+func rob(nums []int) int{
+	var inclusive, exclusive float64
+	for i := 0; i < len(nums); i++ {
+		if i == 0 {
+			inclusive = float64(nums[0]) //2
+			exclusive = 0                //
+		} else {
+			tmp_exclusive := exclusive
+			tmp_inclusive := inclusive
+			inclusive = math.Max(tmp_exclusive+float64(nums[i]), inclusive)
+			exclusive = tmp_inclusive
+		}
+	}
+	return int(inclusive) 
+}

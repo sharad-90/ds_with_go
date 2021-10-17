@@ -1,0 +1,21 @@
+package main
+
+import "fmt"
+
+func main(){
+arr := []int{10, 1, -1, 20, 15}
+insertionSort(arr)
+}
+
+func insertionSort(arr []int) {
+	for i := 1; i < len(arr)-1; i++ {
+		tmp := arr[i]
+		shift := i
+		for shift > 0 && arr[shift-1] > tmp {
+			arr[shift] = arr[shift-1]
+			shift = shift - 1
+		}
+		arr[shift] = tmp
+	}
+	fmt.Println("insertion sort array", arr)
+}

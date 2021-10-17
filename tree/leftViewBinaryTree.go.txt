@@ -1,0 +1,41 @@
+package main
+
+import (
+	"fmt"
+)
+
+type Node struct {
+	data        int
+	left, right *Node
+}
+
+var maxLevel = 0
+
+func main() {
+	fmt.Println("*************** Binary Tree **************")
+	root := newNode(10)
+	root.left = newNode(20)
+	root.right = newNode(30)
+	root.left.left = newNode(50)
+	root.left.right = newNode(60)
+	root.right.left = newNode(70)
+	root.right.right = newNode(80)
+	leftViewOfTree(root, 1)
+
+}
+
+func leftViewOfTree(root *Node, level int) {
+	if root == nil {
+		return
+	}
+	if maxLevel < level {
+		fmt.Println(root.data)
+		maxLevel = level
+	}
+	leftViewOfTree(root.left, level+1)
+	leftViewOfTree(root.right, level+1)
+}
+
+func newNode(data int) *Node {
+	return &Node{data, nil, nil}
+}

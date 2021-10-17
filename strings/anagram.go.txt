@@ -1,0 +1,35 @@
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	fmt.Println("Hello, playground", isAnagram("title", "ttile"))
+}
+
+func isAnagram(s string, t string) bool {
+	if len(s) != len(t) {
+		return false
+	}
+	strMap := make(map[string]int)
+	for _, value := range s {
+		if val, ok := strMap[string(value)]; ok {
+			strMap[string(value)] = val + 1
+		} else {
+			strMap[string(value)] = 1
+		}
+	}
+	for _, value := range t {
+		if val, ok := strMap[string(value)]; ok {
+			strMap[string(value)] = val - 1
+		}
+	}
+	for _, val := range strMap {
+		if val != 0 {
+			return false
+		}
+	}
+	//fmt.Println(strMap)
+	return true
+}

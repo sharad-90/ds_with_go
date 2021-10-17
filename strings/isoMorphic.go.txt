@@ -1,0 +1,50 @@
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+	fmt.Println("Hello, playground", isIsomorphic("paper", "title"))
+
+	fmt.Println("Hello, playground", isIsomorphic("badc", "baba"))
+
+	fmt.Println("Hello, playground", isIsomorphic("foo", "bar"))
+
+	fmt.Println("Hello, playground", isIsomorphic("egg", "add"))
+
+}
+
+func isIsomorphic(s string, t string) bool {
+	if len(s) != len(t) {
+		return false
+	}
+
+	visited := make(map[string]string)
+	replacement:= make(map[string]string)
+	for i := 0; i < len(s); i++ {
+		if _, ok := visited[string(s[i])]; ok {
+			if visited[string(s[i])] == string(t[i]) {
+				continue
+			} else {
+				return false
+			}
+		} else {
+			visited[string(s[i])] = string(t[i])
+		}
+	}
+	for key, val := range visited {
+		if v, ok := replacement[val]; ok {
+			if v != key {
+				return false
+			}
+		} else {
+			replacement[val] = key
+		}
+	}
+	fmt.Println(visited)
+	return true
+}
+
+//egg
+//add

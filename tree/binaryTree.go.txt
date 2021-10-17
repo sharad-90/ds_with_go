@@ -1,0 +1,73 @@
+package main
+
+import (
+	"fmt"
+	"math"
+)
+
+type Node struct {
+	data        int
+	left, right *Node
+}
+
+func main() {
+	fmt.Println("*************** Binary Tree **************")
+	root := newNode(10)
+	root.left = newNode(20)
+	root.right = newNode(30)
+	root.left.left = newNode(50)
+	root.left.right = newNode(60)
+	root.right.left = newNode(70)
+	root.right.right = newNode(80)
+	//inOrder(root)
+	//preOrder(root)
+	//postOrder(root)
+	//fmt.Println("Height of the tree is ", height(root))
+	//printKthDistance(root, 0)
+
+}
+
+func newNode(data int) *Node {
+	return &Node{data, nil, nil}
+}
+
+func inOrder(root *Node) {
+	if root == nil {
+		return
+	} else {
+		inOrder(root.left)
+		fmt.Println(root.data)
+		inOrder(root.right)
+
+	}
+}
+
+func postOrder(root *Node) {
+	if root == nil {
+		return
+	} else {
+		postOrder(root.left)
+		postOrder(root.right)
+		fmt.Println(root.data)
+	}
+}
+
+func height(root *Node) float64 {
+	if root == nil {
+		return float64(0)
+	} else {
+		return math.Max(float64(height((root.left))), float64(height((root.right)))) + float64(1)
+	}
+}
+
+func printKthDistance(root *Node, k int) {
+	if root == nil {
+		return
+	}
+	if k == 0 {
+		fmt.Println(root.data)
+	} else {
+		printKthDistance(root.left, k-1)
+		printKthDistance(root.right, k-1)
+	}
+}

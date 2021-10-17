@@ -1,0 +1,156 @@
+package main
+
+import (
+	fmt
+)
+
+type Node struct {
+	data int
+	next Node
+}
+type List struct {
+	head Node
+}
+
+var head Node
+
+func main() {
+	list = List{}
+	fmt.Println(Hello, playground, list)
+	list.insertAtEnd(10)
+	list.insertAtEnd(20)
+	list.insertAtBeginning(30)
+	list.insertAtBeginning(40)
+	list.display()
+	recursiveDisplay(list.head)
+	fmt.Printf(n)
+	fmt.Println(list.deleteFromBegining().data)
+	fmt.Println(list.deleteFromEnd().data)
+	fmt.Println(list.length())
+	list.insertAtPosition(100, 2)
+	recursiveDisplay(list.head)
+	fmt.Println(searchRecursive(list.head, 100))
+}
+
+func (l List) insertAtEnd(data int) {
+	n = &Node{data, nil}
+	if l.head == nil {
+		l.head = n
+	} else {
+		tmp = l.head
+		for tmp.next != nil {
+			tmp = tmp.next
+		}
+		tmp.next = n
+	}
+}
+
+func (l List) insertAtBeginning(data int) {
+	n = &Node{data, nil}
+	if l.head == nil {
+		l.head = n
+	} else {
+		tmp = l.head
+		n.next = tmp
+		l.head = n
+	}
+}
+
+func (l List) display() {
+	list = l.head
+	for list != nil {
+		fmt.Printf(%+v -, list.data)
+		list = list.next
+	}
+}
+
+func recursiveDisplay(head Node) {
+	if head != nil {
+		fmt.Printf(%+v -, head.data)
+		head = head.next
+		recursiveDisplay(head)
+	} else {
+		return
+	}
+}
+
+func (l List) deleteFromBegining() Node {
+	list = l.head
+	if list == nil {
+		return nil
+	} else {
+		tmp = list
+		l.head = tmp.next
+		tmp = nil
+	}
+	return l.head
+}
+
+func (l List) deleteFromEnd() Node {
+	list = l.head
+	var prev Node
+	if list == nil {
+		return nil
+	} else {
+		for list.next != nil {
+			prev = list
+			list = list.next
+		}
+	}
+	return prev
+}
+func (l List) length() int {
+	list = l.head
+	counter = 0
+	for list != nil {
+		counter++
+		list = list.next
+	}
+
+	return counter
+}
+
+func (l List) insertAtPosition(data, position int) Node {
+	n = l.length()
+	list = l.head
+	node = &Node{data, nil}
+	if position  n-1  position  0 {
+		fmt.Println(Invalid position)
+	} else {
+		for i = 0; i  n; i++ {
+			if i == position-1 {
+				tmp = list.next
+				node.next = tmp
+				list.next = node
+			}
+			list = list.next
+		}
+	}
+	return l.head
+}
+
+func (l List) searchItertative(data int) bool {
+	list = l.head
+	if list == nil {
+		return false
+	} else {
+		for list != nil {
+			if list.data == data {
+				return true
+			}
+			list = list.next
+		}
+	}
+	return false
+}
+
+func searchRecursive(head Node, data int) bool {
+	if head == nil {
+		return false
+	} else if head.data == data {
+		return true
+	} else {
+		return searchRecursive(head.next, data)
+	}
+
+}

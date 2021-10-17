@@ -1,0 +1,177 @@
+package main
+
+import (
+	"fmt"
+)
+
+type Node struct {
+	data int
+	next *Node
+	prev *Node
+}
+type List struct {
+	head *Node
+}
+
+//var head *Node
+
+func main() {
+	list := List{}
+	fmt.Println("Hello, playground", list)
+	list.insertAtEnd(10)
+	list.insertAtEnd(20)
+	list.insertAtEnd(70)
+	list.insertAtBeginning(30)
+	list.insertAtBeginning(40)
+	//list.deleteFromBegining()
+	//list.insertAtPosition(100, 0)
+	//list.display()
+	recursiveDisplay(list.head)
+	list.reverseLinkedList()
+}
+
+func (l *List) insertAtEnd(data int) {
+	n := &Node{data, nil, nil}
+	if l.head == nil {
+		l.head = n
+	} else {
+		tmp := l.head
+		for tmp.next != nil {
+			tmp = tmp.next
+		}
+		tmp.next = n
+		n.prev = tmp
+	}
+}
+
+func (l *List) insertAtBeginning(data int) {
+	n := &Node{data, nil, nil}
+	if l.head == nil {
+		l.head = n
+	} else {
+		tmp := l.head
+		n.next = tmp
+		tmp.prev = n
+		l.head = n
+	}
+}
+
+func (l *List) display() {
+	list := l.head
+	for list != nil {
+		fmt.Printf("%+v ->", list.data)
+		list = list.next
+	}
+}
+
+func recursiveDisplay(head *Node) {
+	if head != nil {
+		fmt.Printf("%+v ->", head.data)
+		head = head.next
+		recursiveDisplay(head)
+	} else {
+		return
+	}
+}
+
+func (l *List) deleteFromBegining() *Node {
+	list := l.head
+	if list == nil {
+		return nil
+	} else {
+		//tmp := list
+		l.head = list.next
+		list = nil
+	}
+	return l.head
+}
+
+func (l *List) deleteFromEnd() *Node {
+	list := l.head
+	if list == nil {
+		return nil
+	} else {
+		for list.next != nil {
+			list = list.next
+		}
+		list.prev.next = nil
+	}
+	return list
+}
+func (l *List) length() int {
+	list := l.head
+	counter := 0
+	for list != nil {
+		counter++
+		list = list.next
+	}
+
+	return counter
+}
+
+func (l *List) insertAtPosition(data, position int) *Node {
+	n := l.length()
+	fmt.Println("Length is ", n)
+	list := l.head
+	node := &Node{data, nil, nil}
+	if position > n-1 || position < 0 {
+		fmt.Println("Invalid position")
+	} else {
+		for i := 0; i < n; i++ {
+			if i == position-1 {
+				list = list.next
+				node.next = list
+				node.prev = list.prev
+				list.prev.next = node
+			} else {
+				list = list.next
+			}
+		}
+	}
+	return l.head
+}
+
+func (l *List) searchItertative(data int) bool {
+	list := l.head
+	if list == nil {
+		return false
+	} else {
+		for list != nil {
+			if list.data == data {
+				return true
+			}
+			list = list.next
+		}
+	}
+	return false
+}
+
+func (l *List) reverseLinkedList() *Node {
+	fmt.Println("Reversing the LL")
+	list := l.head
+	if list == nil || list.next == nil {
+		return list
+	}
+	var prev *Node
+
+	for list != nil {
+		prev = list.prev
+		list.prev = list.next
+		list.next = prev
+		list = list.prev
+	}
+
+	recursiveDisplay(prev.prev)
+	return prev.prev
+}
+
+func searchRecursive(head *Node, data int) bool {
+	if head == nil {
+		return false
+	} else if head.data == data {
+		return true
+	} else {
+		return searchRecursive(head.next, data)
+	}
+
+}

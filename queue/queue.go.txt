@@ -1,0 +1,79 @@
+package main
+
+import (
+	"fmt"
+)
+
+type queue struct {
+	front, size, cap int
+	arr              []int
+}
+
+func main() {
+	q := newQueue(4)
+	fmt.Println(q.isEmpty())
+	q.enqueue(10)
+	q.enqueue(20)
+	q.enqueue(30)
+	q.enqueue(40)
+	fmt.Println(q.sizeQ())
+	q.dequeue()
+	fmt.Println(q.sizeQ())
+}
+
+func newQueue(cap int) *queue {
+	q := new(queue)
+	q.front = 0
+	q.size = 0
+	q.cap = cap
+	q.arr = make([]int, cap)
+	return q
+}
+
+func (q *queue) isFull() bool {
+	return q.size == q.cap
+}
+
+func (q *queue) isEmpty() bool {
+	return q.size == 0
+}
+
+func (q *queue) getFront() int {
+	if q.isEmpty() {
+		return -1
+	} else {
+		return q.front
+	}
+}
+
+func (q *queue) getRear() int {
+	if q.isEmpty() {
+		return -1
+	} else {
+		return (q.front + q.size - 1) % q.cap
+	}
+}
+func (q *queue) sizeQ() int {
+	return q.size
+}
+
+func (q *queue) enqueue(data int) {
+	if q.isFull() {
+		return
+	} else {
+		rear := q.getRear()
+		rear = (rear + 1) % q.cap
+		q.arr[rear] = data
+		q.size++
+	}
+}
+
+func (q *queue) dequeue() {
+	if q.isEmpty() {
+		return
+	} else {
+		front := q.getFront()
+		q.front = (front + 1) % q.cap
+		q.size--
+	}
+}
